@@ -1,0 +1,184 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+
+  --color-bg: #070b18;
+  --color-surface: #0f1629;
+  --color-surface-2: #141c33;
+  --color-border: #1f2a4a;
+  --color-border-strong: #2b3a6a;
+
+  --color-text: #e8eefc;
+  --color-text-muted: #8fa0c7;
+  --color-text-dim: #5b6b93;
+
+  --color-cyan: #4fd1ff;
+  --color-cyan-dim: #2b92b8;
+  --color-green: #22c55e;
+  --color-amber: #f5a524;
+  --color-red: #ef4444;
+  --color-magenta: #d946ef;
+  --color-lime: #a3e635;
+}
+
+:root {
+  --bg: #070b18;
+  --surface: #0f1629;
+  --surface-2: #141c33;
+  --border: #1f2a4a;
+  --border-strong: #2b3a6a;
+  --text: #e8eefc;
+  --text-muted: #8fa0c7;
+  --text-dim: #5b6b93;
+  --cyan: #4fd1ff;
+  --green: #22c55e;
+  --amber: #f5a524;
+  --red: #ef4444;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-feature-settings: "cv11", "ss01";
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+#app {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Utilities */
+.tabular { font-variant-numeric: tabular-nums; }
+.mono { font-family: var(--font-mono); }
+
+/* Card styling */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(20, 28, 51, 0.4);
+  flex-shrink: 0;
+}
+.card-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.card-meta {
+  font-size: 11px;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+}
+.card-body {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Pulse animation */
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.4); }
+}
+.pulse-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: pulse 1.6s ease-in-out infinite;
+  box-shadow: 0 0 12px currentColor;
+}
+.pulse-dot.amber { background: var(--amber); color: var(--amber); }
+.pulse-dot.red { background: var(--red); color: var(--red); }
+.pulse-dot.cyan { background: var(--cyan); color: var(--cyan); }
+
+/* Scrollbars */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+
+/* uPlot theme overrides */
+.u-wrap { font-family: var(--font-mono); }
+.u-legend { color: var(--text-muted) !important; font-size: 11px !important; }
+.u-axis { color: var(--text-dim); }
+
+/* Button styles */
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: 1px solid var(--border-strong);
+  background: var(--surface-2);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  transition: all 0.15s ease;
+}
+button:hover:not(:disabled) {
+  background: var(--border-strong);
+  border-color: var(--cyan);
+}
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+button.primary {
+  background: linear-gradient(180deg, var(--cyan), var(--cyan-dim, #2b92b8));
+  color: #001724;
+  border: 0;
+  font-weight: 700;
+}
+
+/* Input */
+input[type="file"], input[type="number"], select {
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-family: inherit;
+}
+
+/* Big KPI number */
+.kpi-num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+/* Flash animation for new events */
+@keyframes flash-in {
+  from { opacity: 0; transform: translateY(-12px); background: rgba(79, 209, 255, 0.15); }
+  to { opacity: 1; transform: translateY(0); background: transparent; }
+}
+.flash-in { animation: flash-in 0.8s ease-out; }
+
+/* Sparkline */
+.sparkline { stroke-width: 1.5; fill: none; }
